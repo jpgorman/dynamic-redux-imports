@@ -1,0 +1,22 @@
+{
+  "name": "dynamic-redux-imports",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpgorman/dynamic-redux-imports.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpgorman/dynamic-redux-imports/issues"
+  },
+  "homepage": "https://github.com/jpgorman/dynamic-redux-imports#readme",
+  "devDependencies": {
+    "prettier": "^1.14.3"
+  }
+}
