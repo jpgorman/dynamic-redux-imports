@@ -1,0 +1,26 @@
+{
+"compilerOptions": {
+      "downlevelIteration": true,
+          "outDir": "dist",
+              "module": "commonjs",
+                  "target": "es5",
+                      "lib": ["es6", "dom"],
+                          "sourceMap": true,
+                              "allowJs": false,
+                                  "jsx": "react",
+                                      "moduleResolution": "node",
+                                          "rootDir": "src",
+                                              "forceConsistentCasingInFileNames": true,
+                                                  "noImplicitReturns": true,
+                                                      "noImplicitThis": true,
+                                                          "noImplicitAny": true,
+                                                              "strictNullChecks": true,
+                                                                  "suppressImplicitAnyIndexErrors": true,
+                                                                      "noUnusedLocals": true,
+                                                                          "baseUrl": "./src",
+                                                                              "paths": {
+                                                                                      "*": [".typings/*"]
+                                                                                          }
+                                                                                            },
+                                                                                              "exclude": ["node_modules", "dist", "vendor"]
+                                                                                              }

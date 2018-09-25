@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "files": [
+    "dist",
+    "src/**/*.ts"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --colors"
   },
   "repository": {
     "type": "git",
@@ -17,6 +21,16 @@
   },
   "homepage": "https://github.com/jpgorman/dynamic-redux-imports#readme",
   "devDependencies": {
-    "prettier": "^1.14.3"
+    "sinon": "^6.3.4",
+    "ts-jest": "^23.10.1",
+    "@types/sinon": "^5.0.2",
+    "@types/jest": "^23.3.2",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.3",
+    "typescript": "^3.0.3",
+    "typescript-eslint-parser": "^18.0.0"
+  },
+  "peerDependencies": {
+    "redux": "^4.0.0"
   }
 }
