@@ -54,11 +54,9 @@ const createStoreFactory = ({ createStore, combineReducers }: any) => (
     name,
     reducers,
   }: IRegisterDynamicModule) => {
-    console.info(`Registering module reducers for ${name}`)
     injectAsyncReducers(store, name, reducers)
   }
   store.unRegisterDynamicModule = (name: string) => {
-    console.info(`Unregistering module reducers for ${name}`)
     const noopReducer = (state = {}) => state
     injectAsyncReducers(store, name, noopReducer)
   }

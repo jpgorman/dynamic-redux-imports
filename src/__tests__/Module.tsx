@@ -42,7 +42,7 @@ describe('<Module />', () => {
   it('Should render error message if module throws', async () => {
     const BadWrapper = await mount(<Module resolve={mockBadModule} />)
     try {
-    } catch {
+    } catch (e) {
       expect(BadWrapper.text()).toBe('nope!')
     }
   })

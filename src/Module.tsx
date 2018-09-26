@@ -18,22 +18,22 @@ interface Import {
   default: ModuleShape
 }
 
-type Props = {
-  resolve: Promise<Import>
-} & Partial<DefaultProps>
-
-type Context = {
-  store: DynamicStore
-}
-
-type DefaultProps = Readonly<typeof defaultProps>
-
 const defaultProps = {
   loading: '',
 }
 const defaultState = {
   module: undefined,
   hasError: undefined,
+}
+
+type DefaultProps = Readonly<typeof defaultProps>
+
+type Props = {
+  resolve: Promise<Import>
+} & Partial<DefaultProps>
+
+type Context = {
+  store: DynamicStore
 }
 
 export default class Module extends React.Component<Props, State> {
@@ -74,7 +74,6 @@ export default class Module extends React.Component<Props, State> {
   render() {
     const { module, hasError } = this.state
 
-    console.log(module)
     if (hasError) return <React.Fragment>{hasError.message}</React.Fragment>
     if (!module) return <React.Fragment>{this.props.loading}</React.Fragment>
     if (module.view != null) return React.createElement(module.view)

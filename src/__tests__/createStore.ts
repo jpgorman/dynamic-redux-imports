@@ -37,7 +37,6 @@ describe('createDynamicStore', () => {
       mockInitialState,
       applyMiddleware(mockEhancer),
     )
-    mockStore.subscribe
   })
   it('Should return a function', () => {
     expect(createDynamicStore).toBeInstanceOf(Function)

@@ -1,5 +1,6 @@
 module.exports = {
-  setupFiles: ['<rootDir>/test-setup.js'],
+  setupTestFrameworkScriptFile: './test/setup.js',
+  setupFiles: ['<rootDir>/test/setup.js'],
   transform: {
     '.(ts|tsx)': 'ts-jest',
   },

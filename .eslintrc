@@ -1,0 +1,15 @@
+{
+  "parser": "typescript-eslint-parser",
+  "extends": "react-app",
+  "plugins": ["typescript", "no-only-tests"],
+  "rules": {
+    "no-console": 1,
+    "typescript/no-unused-vars": 2,
+    "no-undef": 0,
+    "no-restricted-globals": 0,
+    "no-unused-vars": 2,
+    "no-alert": 2,
+    "no-only-tests/no-only-tests": 2,
+  }
+}
+
