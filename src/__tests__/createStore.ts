@@ -1,6 +1,6 @@
 import { applyMiddleware } from 'redux'
 import * as sinon from 'sinon'
-import createDynamicStore from '../createStore'
+import { createDynamicStore } from '../'
 
 const MockAction = 'FOO'
 
@@ -98,6 +98,14 @@ describe('createDynamicStore', () => {
       }
       expect(actual.moduleA).toEqual(expected)
     })
+    it("Should throw an error when trying to register under a namespace that's already taken", () => {
+      expect(() =>
+        mockStore.registerDynamicModule({
+          name: 'moduleA',
+          reducers: mockDynamicReducerMap,
+        }),
+      ).toThrow()
+    })
   })
   describe('Dynamically unregistering modules', () => {
     beforeEach(() => {
@@ -117,6 +125,9 @@ describe('createDynamicStore', () => {
         myModuleData: 'default',
       }
       expect(actual.moduleB).toEqual(expected)
+    })
+    it("Should throw an error when trying to unregister from a namespace that doesn't exist", () => {
+      expect(() => mockStore.unRegisterDynamicModule('zzz')).toThrow()
     })
   })
 })

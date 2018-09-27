@@ -19,5 +19,5 @@
   "noUnusedLocals": true,
   "baseUrl": "./src"
   },
-"exclude": ["node_modules", "dist", "src/__tests__", "test", "jest.config.js"]
+  "exclude": ["node_modules", "dist", "test", "jest.config.js"]
 }

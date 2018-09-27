@@ -13,7 +13,7 @@
     "unit": "jest --colors",
     "lint": "eslint --ext .ts,.tsx src",
     "prettier": "node_modules/.bin/prettier -l src/**/*.{ts,tsx}",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "precommit": "npm run lint && npm run prettier",
     "prepush": "npm run test"
   },
@@ -29,6 +29,7 @@
   "homepage": "https://github.com/jpgorman/dynamic-redux-imports#readme",
   "devDependencies": {
     "@types/enzyme": "^3.1.14",
+    "@types/invariant": "^2.2.29",
     "@types/jest": "^23.3.2",
     "@types/prop-types": "^15.5.5",
     "@types/react": "^16.4.14",
@@ -56,6 +57,7 @@
   "dependencies": {
     "babel-eslint": "^7.2.3",
     "eslint": "^4.18.0",
+    "invariant": "^2.2.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "redux": "^4.0.0"

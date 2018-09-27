@@ -1,24 +1,22 @@
 import { createStore, combineReducers, Store, Reducer } from 'redux'
+import * as invariant from 'invariant'
 
-interface IRegisterDynamicModule {
+interface RegisterDynamicModule {
   name: string
   reducers: any
 }
 
-type TRegisterDynamicModule = (
-  { name, reducers }: IRegisterDynamicModule,
-) => void
-type TUnregisterDynamicModule = (name: string) => void
-
 export interface DynamicStore extends Store<{}> {
-  registerDynamicModule: TRegisterDynamicModule
-  unRegisterDynamicModule: TUnregisterDynamicModule
-  asyncReducers?: any
+  registerDynamicModule({ name, reducers }: RegisterDynamicModule): void
+  unRegisterDynamicModule(name: string): void
+  asyncReducers: any
 }
 
 interface StringMap<T> {
   [key: string]: T
 }
+
+const noopReducer = (state = {}) => state
 
 const createStoreFactory = ({ createStore, combineReducers }: any) => (
   reducerMap: StringMap<Reducer>,
@@ -30,7 +28,6 @@ const createStoreFactory = ({ createStore, combineReducers }: any) => (
     reducers: Object | Function,
   ) => {
     let asyncReducers
-
     if (typeof reducers === 'function') {
       asyncReducers = reducers
     }
@@ -50,14 +47,18 @@ const createStoreFactory = ({ createStore, combineReducers }: any) => (
 
   const store = createStore(combineReducers(reducerMap), ...rest)
   store.asyncReducers = {}
-  store.registerDynamicModule = ({
-    name,
-    reducers,
-  }: IRegisterDynamicModule) => {
+  store.registerDynamicModule = ({ name, reducers }: RegisterDynamicModule) => {
+    invariant(
+      !store.asyncReducers.hasOwnProperty(name),
+      `There are already reducers registered with under "${name}".`,
+    )
     injectAsyncReducers(store, name, reducers)
   }
-  store.unRegisterDynamicModule = (name: string) => {
-    const noopReducer = (state = {}) => state
+  store.unRegisterDynamicModule = (name: string): void => {
+    invariant(
+      store.asyncReducers.hasOwnProperty(name),
+      `There aren't any reducers registered under "${name}".`,
+    )
     injectAsyncReducers(store, name, noopReducer)
   }
 

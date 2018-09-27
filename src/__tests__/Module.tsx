@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as sinon from 'sinon'
 import { mount } from 'enzyme'
-import Module from '../Module'
+import { Module } from '../'
 
 const mockStore = {
   registerDynamicModule: sinon.stub(),
