@@ -13,7 +13,9 @@
     "unit": "jest --colors",
     "lint": "eslint --ext .ts,.tsx src",
     "prettier": "node_modules/.bin/prettier -l src/**/*.{ts,tsx}",
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "precommit": "npm run lint && npm run prettier",
+    "prepush": "npm run test"
   },
   "repository": {
     "type": "git",
@@ -41,6 +43,7 @@
     "eslint-plugin-no-only-tests": "^2.0.1",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-typescript": "^0.12.0",
+    "husky": "^1.0.1",
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
     "prop-types": "^15.6.2",
