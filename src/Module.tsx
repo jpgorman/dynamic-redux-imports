@@ -3,10 +3,12 @@ import * as PropTypes from 'prop-types'
 import { Reducer } from 'redux'
 import { DynamicStore } from './createStore'
 
+type ReactComponent = React.ComponentType<any>
+
 interface ModuleShape {
   name?: string
   reducers?: { [key: string]: Reducer }
-  view?: React.StatelessComponent | React.ComponentClass
+  view?: ReactComponent
 }
 
 interface State {
@@ -18,37 +20,35 @@ interface Import {
   default: ModuleShape
 }
 
-const defaultProps = {
+const defaultModuleProps = {
   loading: '',
 }
-const defaultState = {
+const initialState = {
   module: undefined,
   hasError: undefined,
 }
 
-type DefaultProps = Readonly<typeof defaultProps>
+type DefaultModuleProps = Readonly<typeof defaultModuleProps>
 
-type Props = {
+type ModuleProps = {
   resolve: () => Promise<Import>
-} & Partial<DefaultProps>
+  loading?: string | ReactComponent
+}
 
 type Context = {
   store: DynamicStore
 }
 
-export default class Module extends React.Component<Props, State> {
+class Module extends React.Component<any, State> {
   static contextTypes = {
     store: PropTypes.object,
   }
 
-  context: Context
+  readonly context: Context
 
-  static defaultProps = defaultProps
+  readonly state: State = initialState
 
-  constructor(props: Props) {
-    super(props)
-    this.state = defaultState
-  }
+  readonly defaultModuleProps: DefaultModuleProps = defaultModuleProps
 
   async componentDidMount() {
     try {
@@ -73,10 +73,16 @@ export default class Module extends React.Component<Props, State> {
 
   render() {
     const { module, hasError } = this.state
-
+    const { loading, resolve, ...rest } = this.props
     if (hasError) return <React.Fragment>{hasError.message}</React.Fragment>
     if (!module) return <React.Fragment>{this.props.loading}</React.Fragment>
-    if (module.view != null) return React.createElement(module.view)
+    if (module.view != null) return React.createElement(module.view, rest)
     return <React.Fragment>Module Loaded</React.Fragment>
   }
 }
+
+const WithModuleProps = <P extends {}>(props: ModuleProps & P) => (
+  <Module {...props} />
+)
+
+export default WithModuleProps

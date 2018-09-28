@@ -83,9 +83,12 @@ export default {
 
 Renders `view` from `path/to/module` and registers `reducers` from module with store.
 
+Also note that all other props other than `resolve` will be passed onto then imported component, after it has been loaded.
+
 | Argument       | Type     | Requried | Description                                                                                                                                                                                                                                                                |
 | -------------- | -------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | resolve           | Function   | true     | A function that wraps the import  method e.g. `() => import("path/to/module")`. This should be a closure to make the import load lazily.                    |
+| loading           | String   | true     | Content that should be rendered whilst the module is bieng loadedContent that should be rendered whilst the module is bieng loaded. |
 
 ### createDynamicStore
 
