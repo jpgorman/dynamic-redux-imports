@@ -15,9 +15,13 @@
     "unit": "jest --colors",
     "lint": "eslint --ext .ts,.tsx src",
     "prettier": "node_modules/.bin/prettier -l src/**/*.{ts,tsx}",
-    "build": "rimraf dist && tsc -p tsconfig.build.json",
-    "precommit": "npm run lint && npm run prettier",
-    "prepush": "npm run test"
+    "build": "rimraf dist && tsc -p tsconfig.build.json"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run prettier",
+      "pre-push": "npm run test"
+    }
   },
   "repository": {
     "type": "git",
