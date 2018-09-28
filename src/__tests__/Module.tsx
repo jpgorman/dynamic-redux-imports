@@ -12,23 +12,27 @@ const mockReducer = {
   foo: (state = {}, action: any) => state,
 }
 
-const mockModule = Promise.resolve({
-  default: {
-    name: 'module',
-    view: () => <div>foo</div>,
-    reducers: mockReducer,
-  },
-})
+const mockModule = () =>
+  Promise.resolve({
+    default: {
+      name: 'module',
+      view: () => <div>foo</div>,
+      reducers: mockReducer,
+    },
+  })
 
 const context = { store: mockStore }
 
-const mockBadModule = Promise.reject(new Error('nope!'))
+const mockBadModule = () => Promise.reject(new Error('nope!'))
 
 describe('<Module />', () => {
   beforeEach(() => {})
   it('Should render loading prop if module is not ready', () => {
     const Wrapper = mount(
-      <Module loading="loading" resolve={Promise.resolve({ default: {} })} />,
+      <Module
+        loading="loading"
+        resolve={() => Promise.resolve({ default: {} })}
+      />,
     )
     expect(Wrapper.text()).toBe('loading')
   })
@@ -48,7 +52,7 @@ describe('<Module />', () => {
   })
   it('Should show default text if no "view" exists in module', async () => {
     const Wrapper = await mount(
-      <Module resolve={Promise.resolve({ default: { name: 'foo' } })} />,
+      <Module resolve={() => Promise.resolve({ default: { name: 'foo' } })} />,
     )
     expect(Wrapper.text()).toBe('Module Loaded')
   })

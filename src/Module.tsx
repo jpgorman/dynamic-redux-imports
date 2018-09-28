@@ -29,7 +29,7 @@ const defaultState = {
 type DefaultProps = Readonly<typeof defaultProps>
 
 type Props = {
-  resolve: Promise<Import>
+  resolve: () => Promise<Import>
 } & Partial<DefaultProps>
 
 type Context = {
@@ -53,7 +53,7 @@ export default class Module extends React.Component<Props, State> {
   async componentDidMount() {
     try {
       const { resolve } = this.props
-      const { default: module } = await resolve
+      const { default: module } = await resolve()
       const { name, reducers } = module
       const { store } = this.context
       if (name && store && reducers)

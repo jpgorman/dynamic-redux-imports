@@ -4,6 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "types": "src/index.ts",
+  "respository": "https://github.com/jpgorman.dynamic-redux-inports",
+  "author": "JP Gorman",
   "files": [
     "dist",
     "src/**/*.ts"
@@ -34,6 +36,9 @@
     "@types/prop-types": "^15.5.5",
     "@types/react": "^16.4.14",
     "@types/sinon": "^5.0.2",
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.18.0",
+    "invariant": "^2.2.4",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "eslint-config-react": "^1.1.7",
@@ -47,7 +52,6 @@
     "husky": "^1.0.1",
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
-    "prop-types": "^15.6.2",
     "rimraf": "^2.6.2",
     "sinon": "^6.3.4",
     "ts-jest": "^23.10.1",
@@ -55,16 +59,15 @@
     "typescript-eslint-parser": "^18.0.0"
   },
   "dependencies": {
-    "babel-eslint": "^7.2.3",
-    "eslint": "^4.18.0",
-    "invariant": "^2.2.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "prop-types": "^15.6.2"
   },
   "peerDependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "prop-types": "^15.6.2"
   }
 }
