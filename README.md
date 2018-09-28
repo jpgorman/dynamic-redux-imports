@@ -75,7 +75,7 @@ export default {
 
 ## API
 
-### <Module />
+### Module
 
 ```js
 <Module resolve={() => import('path/to/module')} foo="bar" />
