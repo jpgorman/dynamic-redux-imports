@@ -11,6 +11,7 @@
     "src/**/*.ts"
   ],
   "scripts": {
+    "prepare": "npm run test && npm run build",
     "test": "npm run lint && npm run unit",
     "unit": "jest --colors",
     "lint": "eslint --ext .ts,.tsx src",
