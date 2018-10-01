@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "src/index.ts",
   "respository": "https://github.com/jpgorman.dynamic-redux-inports",
+  "keywords": ["code-splitting", "redux", "react", "dynamic-imports"],
   "author": "",
   "files": [
     "dist",
