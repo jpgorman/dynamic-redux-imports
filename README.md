@@ -90,7 +90,7 @@ Also note that any outside of the API will be passed down to the imported compon
 createDynamicStore(reducerDictionary, preloadedState, enhancer)
 ```
 
-The only difference between `createDynamicStore` and reduxs `createStore` is that the first agrument should be a dictionary of reducers for your store. Other than that `createDynamicStore` works in exactly the same was as redux's `createStore`.  [See redux documentation for more detail.](https://redux.js.org/api/createstore)
+The only difference between `createDynamicStore` and redux's `createStore` is that the first argument should be a dictionary of reducers for your store. Other than that `createDynamicStore` works in exactly the same was as redux's `createStore`.  [See redux documentation for more detail.](https://redux.js.org/api/createstore)
 
 ```js
 const fooReducer = (state, action) => Object.assign({}, state, action.payload)
