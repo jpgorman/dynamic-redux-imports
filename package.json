@@ -1,11 +1,16 @@
 {
   "name": "dynamic-redux-imports",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "respository": "https://github.com/jpgorman.dynamic-redux-inports",
-  "keywords": ["code-splitting", "redux", "react", "dynamic-imports"],
+  "keywords": [
+    "code-splitting",
+    "redux",
+    "react",
+    "dynamic-imports"
+  ],
   "author": "",
   "files": [
     "dist",
