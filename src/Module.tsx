@@ -25,7 +25,6 @@ const defaultModuleProps = {
 }
 const initialState = {
   module: undefined,
-  hasError: undefined,
 }
 
 type DefaultModuleProps = Readonly<typeof defaultModuleProps>
@@ -76,9 +75,8 @@ class Module extends React.Component<any, State> {
   }
 
   render() {
-    const { module, hasError } = this.state
+    const { module } = this.state
     const { loading, resolve, ...rest } = this.props
-    if (hasError) return <React.Fragment>{hasError.message}</React.Fragment>
     if (module === undefined)
       return <React.Fragment>{this.props.loading}</React.Fragment>
     if (module && module.view != null)

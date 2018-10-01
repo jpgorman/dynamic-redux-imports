@@ -1,12 +1,11 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as sinon from 'sinon'
 import { mount } from 'enzyme'
 import { Module } from '../'
 
 const mockStore = {
-  addModule: sinon.stub(),
-  removeModule: sinon.stub(),
+  addModule: jest.fn(),
+  removeModule: jest.fn(),
 }
 
 const mockReducer = {
@@ -34,49 +33,62 @@ const options = {
   },
 }
 
-const mockBadModule = () => Promise.reject(new Error('nope!'))
+const assertAfterPromiseHasResolved = (assertion: any) => (
+  promise: Promise<any>,
+  Wrapper: any,
+) => {
+  return promise
+    .then(() => {
+      Wrapper.update()
+    })
+    .then(assertion)
+}
 
 describe('<Module />', () => {
-  it('Should not render anything when the module has no view', async () => {
-    const Wrapper = await mount(
+  it('Should not render anything when the module has no view', () => {
+    const promise = mockModule()
+    const Wrapper = mount(
       <Module resolve={() => Promise.resolve({ default: {} })} />,
     )
-    expect(Wrapper.text()).toBe(null)
+
+    return assertAfterPromiseHasResolved(() => {
+      expect(Wrapper.text()).toBe(null)
+    })(promise, Wrapper)
   })
   it('Should render module view', () => {
     const promise = mockModule()
     const Wrapper = mount(<Module resolve={mockModule} />)
-    return promise
-      .then(() => {
-        Wrapper.update()
-      })
-      .then(() => {
-        expect(Wrapper.text()).toBe('foo')
-      })
-      .catch(e => console.error(e))
-  })
-  it('Should pass props other onto modules View component', async () => {
-    const Wrapper = await mount(<Module foo="bar" resolve={mockModule} />)
 
-    expect(Wrapper.text()).toBe('bar')
+    return assertAfterPromiseHasResolved(() => {
+      expect(Wrapper.text()).toBe('foo')
+    })(promise, Wrapper)
   })
-  it('Should throw when there is an error loading the module', async () => {
-    const BadWrapper = await mount(<Module resolve={mockBadModule} />)
-    try {
-    } catch (e) {
-      expect(() => BadWrapper.text()).toThrow()
-    }
+  it('Should pass props other onto modules View component', () => {
+    const promise = mockModule()
+    const Wrapper = mount(<Module foo="bar" resolve={mockModule} />)
+
+    return assertAfterPromiseHasResolved(() => {
+      expect(Wrapper.text()).toBe('bar')
+    })(promise, Wrapper)
   })
-  it('Should register module reducers with store', async () => {
-    await mount(<Module resolve={mockModule} />, options)
-    sinon.assert.calledWith(mockStore.addModule, {
-      name: 'module',
-      reducers: mockReducer,
-    })
+  it('Should register module reducers with store', () => {
+    const promise = mockModule()
+    const Wrapper = mount(<Module resolve={mockModule} />, options)
+
+    return assertAfterPromiseHasResolved(() => {
+      expect(mockStore.addModule).toHaveBeenCalledWith({
+        name: 'module',
+        reducers: mockReducer,
+      })
+    })(promise, Wrapper)
   })
-  it('Should unregister module reducers with store when unmounting', async () => {
-    const Wrapper = await mount(<Module resolve={mockModule} />, options)
-    Wrapper.unmount()
-    sinon.assert.calledWith(mockStore.removeModule, 'module')
+  it('Should unregister module reducers with store when unmounting', () => {
+    const promise = mockModule()
+    const Wrapper = mount(<Module resolve={mockModule} />, options)
+
+    return assertAfterPromiseHasResolved(() => {
+      Wrapper.unmount()
+      expect(mockStore.removeModule).toHaveBeenCalledWith('module')
+    })(promise, Wrapper)
   })
 })
