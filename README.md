@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jpgorman/dynamic-redux-imports.svg?branch=master)](https://travis-ci.org/jpgorman/dynamic-redux-imports)
+[![Build Status](https://travis-ci.com/jpgorman/dynamic-redux-imports.svg?branch=master)](https://travis-ci.vom/jpgorman/dynamic-redux-imports)
 [![npm version](https://badge.fury.io/js/dynamic-redux-imports.svg)](https://badge.fury.io/js/dynamic-redux-imports)
 
 ## Installation
