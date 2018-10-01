@@ -13,7 +13,6 @@ interface ModuleShape {
 
 interface State {
   module?: ModuleShape
-  hasError?: Error
 }
 
 interface Import {

@@ -33,62 +33,42 @@ const options = {
   },
 }
 
-const assertAfterPromiseHasResolved = (assertion: any) => (
-  promise: Promise<any>,
-  Wrapper: any,
-) => {
-  return promise
-    .then(() => {
-      Wrapper.update()
-    })
-    .then(assertion)
-}
-
 describe('<Module />', () => {
-  it('Should not render anything when the module has no view', () => {
-    const promise = mockModule()
+  it('Should render loading prop if module is not ready', () => {
     const Wrapper = mount(
-      <Module resolve={() => Promise.resolve({ default: {} })} />,
+      <Module
+        loading="loading"
+        resolve={() => Promise.resolve({ default: {} })}
+      />,
     )
-
-    return assertAfterPromiseHasResolved(() => {
-      expect(Wrapper.text()).toBe(null)
-    })(promise, Wrapper)
+    expect(Wrapper.text()).toBe('loading')
   })
-  it('Should render module view', () => {
-    const promise = mockModule()
-    const Wrapper = mount(<Module resolve={mockModule} />)
+  it('Should render module view', async () => {
+    const Wrapper = await mount(<Module resolve={mockModule} />)
 
-    return assertAfterPromiseHasResolved(() => {
-      expect(Wrapper.text()).toBe('foo')
-    })(promise, Wrapper)
+    expect(Wrapper.text()).toBe('foo')
   })
-  it('Should pass props other onto modules View component', () => {
-    const promise = mockModule()
-    const Wrapper = mount(<Module foo="bar" resolve={mockModule} />)
+  it('Should pass props other onto modules View component', async () => {
+    const Wrapper = await mount(<Module foo="bar" resolve={mockModule} />)
 
-    return assertAfterPromiseHasResolved(() => {
-      expect(Wrapper.text()).toBe('bar')
-    })(promise, Wrapper)
+    expect(Wrapper.text()).toBe('bar')
   })
-  it('Should register module reducers with store', () => {
-    const promise = mockModule()
-    const Wrapper = mount(<Module resolve={mockModule} />, options)
-
-    return assertAfterPromiseHasResolved(() => {
-      expect(mockStore.addModule).toHaveBeenCalledWith({
-        name: 'module',
-        reducers: mockReducer,
-      })
-    })(promise, Wrapper)
+  it('Should not render anything if no "view" exists in module', async () => {
+    const Wrapper = await mount(
+      <Module resolve={() => Promise.resolve({ default: { name: 'foo' } })} />,
+    )
+    expect(Wrapper.text()).toBe(null)
   })
-  it('Should unregister module reducers with store when unmounting', () => {
-    const promise = mockModule()
-    const Wrapper = mount(<Module resolve={mockModule} />, options)
-
-    return assertAfterPromiseHasResolved(() => {
-      Wrapper.unmount()
-      expect(mockStore.removeModule).toHaveBeenCalledWith('module')
-    })(promise, Wrapper)
+  it('Should register module reducers with store', async () => {
+    await mount(<Module resolve={mockModule} />, options)
+    expect(mockStore.addModule).toHaveBeenCalledWith({
+      name: 'module',
+      reducers: mockReducer,
+    })
+  })
+  it('Should unregister module reducers with store when unmounting', async () => {
+    const Wrapper = await mount(<Module resolve={mockModule} />, options)
+    Wrapper.unmount()
+    expect(mockStore.removeModule).toBeCalledWith('module')
   })
 })
