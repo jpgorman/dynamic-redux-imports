@@ -43,10 +43,17 @@ describe('<Module />', () => {
     )
     expect(Wrapper.text()).toBe(null)
   })
-  it('Should render module view', async () => {
-    const Wrapper = await mount(<Module resolve={mockModule} />)
-
-    expect(Wrapper.text()).toBe('foo')
+  it('Should render module view', () => {
+    const promise = mockModule()
+    const Wrapper = mount(<Module resolve={mockModule} />)
+    return promise
+      .then(() => {
+        Wrapper.update()
+      })
+      .then(() => {
+        expect(Wrapper.text()).toBe('foo')
+      })
+      .catch(e => console.error(e))
   })
   it('Should pass props other onto modules View component', async () => {
     const Wrapper = await mount(<Module foo="bar" resolve={mockModule} />)
