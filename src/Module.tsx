@@ -44,6 +44,8 @@ class Module extends React.Component<any, State> {
     store: PropTypes.object,
   }
 
+  _isMounted: boolean = false
+
   readonly context: Context
 
   readonly state: State = initialState
@@ -51,32 +53,37 @@ class Module extends React.Component<any, State> {
   readonly defaultModuleProps: DefaultModuleProps = defaultModuleProps
 
   async componentDidMount() {
+    this._isMounted = true
     try {
       const { resolve } = this.props
       const { default: module } = await resolve()
       const { name, reducers } = module
       const { store } = this.context
       if (name && store && reducers) store.addModule({ name, reducers })
-      this.setState({ module })
+      this._isMounted && this.setState({ module })
     } catch (error) {
-      this.setState({ hasError: error })
+      throw error
     }
   }
 
   componentWillUnmount() {
     const { module } = this.state
     const { store } = this.context
-    if (store && module != null && module.name != null)
+    if (store && module != null && module.name != null) {
       store.removeModule(module.name)
+    }
+    this._isMounted = false
   }
 
   render() {
     const { module, hasError } = this.state
     const { loading, resolve, ...rest } = this.props
     if (hasError) return <React.Fragment>{hasError.message}</React.Fragment>
-    if (!module) return <React.Fragment>{this.props.loading}</React.Fragment>
-    if (module.view != null) return React.createElement(module.view, rest)
-    return <React.Fragment>Module Loaded</React.Fragment>
+    if (module === undefined)
+      return <React.Fragment>{this.props.loading}</React.Fragment>
+    if (module && module.view != null)
+      return React.createElement(module.view, rest)
+    return null
   }
 }
 
