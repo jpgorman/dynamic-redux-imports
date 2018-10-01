@@ -41,11 +41,11 @@ describe('createDynamicStore', () => {
   it('Should return a function', () => {
     expect(createDynamicStore).toBeInstanceOf(Function)
   })
-  it('Should have "registerDynamicModule" property', () => {
-    expect(mockStore).toHaveProperty('registerDynamicModule')
+  it('Should have "addModule" property', () => {
+    expect(mockStore).toHaveProperty('addModule')
   })
-  it('Should have "unRegisterDynamicModule" property', () => {
-    expect(mockStore).toHaveProperty('unRegisterDynamicModule')
+  it('Should have "removeModule" property', () => {
+    expect(mockStore).toHaveProperty('removeModule')
   })
   it('Should persist initial state', () => {
     const actual = mockStore.getState()
@@ -75,7 +75,7 @@ describe('createDynamicStore', () => {
   })
   describe('Dynamically registering modules', () => {
     beforeEach(() => {
-      mockStore.registerDynamicModule({
+      mockStore.addModule({
         name: 'moduleA',
         reducers: mockDynamicReducerMap,
       })
@@ -100,7 +100,7 @@ describe('createDynamicStore', () => {
     })
     it("Should throw an error when trying to register under a namespace that's already taken", () => {
       expect(() =>
-        mockStore.registerDynamicModule({
+        mockStore.addModule({
           name: 'moduleA',
           reducers: mockDynamicReducerMap,
         }),
@@ -109,13 +109,13 @@ describe('createDynamicStore', () => {
   })
   describe('Dynamically unregistering modules', () => {
     beforeEach(() => {
-      mockStore.registerDynamicModule({
+      mockStore.addModule({
         name: 'moduleB',
         reducers: mockDynamicReducerMap,
       })
     })
     it('Should stop actions from updating the modules state', () => {
-      mockStore.unRegisterDynamicModule('moduleB')
+      mockStore.removeModule('moduleB')
       mockStore.dispatch({
         type: MockAction,
         payload: 'baz',
@@ -127,7 +127,7 @@ describe('createDynamicStore', () => {
       expect(actual.moduleB).toEqual(expected)
     })
     it("Should throw an error when trying to unregister from a namespace that doesn't exist", () => {
-      expect(() => mockStore.unRegisterDynamicModule('zzz')).toThrow()
+      expect(() => mockStore.removeModule('zzz')).toThrow()
     })
   })
 })

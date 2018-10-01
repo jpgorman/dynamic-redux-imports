@@ -56,8 +56,7 @@ class Module extends React.Component<any, State> {
       const { default: module } = await resolve()
       const { name, reducers } = module
       const { store } = this.context
-      if (name && store && reducers)
-        store.registerDynamicModule({ name, reducers })
+      if (name && store && reducers) store.addModule({ name, reducers })
       this.setState({ module })
     } catch (error) {
       this.setState({ hasError: error })
@@ -68,7 +67,7 @@ class Module extends React.Component<any, State> {
     const { module } = this.state
     const { store } = this.context
     if (store && module != null && module.name != null)
-      store.unRegisterDynamicModule(module.name)
+      store.removeModule(module.name)
   }
 
   render() {

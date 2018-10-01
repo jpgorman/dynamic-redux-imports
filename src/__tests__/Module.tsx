@@ -5,8 +5,8 @@ import { mount } from 'enzyme'
 import { Module } from '../'
 
 const mockStore = {
-  registerDynamicModule: sinon.stub(),
-  unRegisterDynamicModule: sinon.stub(),
+  addModule: sinon.stub(),
+  removeModule: sinon.stub(),
 }
 
 const mockReducer = {
@@ -71,7 +71,7 @@ describe('<Module />', () => {
   })
   it('Should register module reducers with store', async () => {
     await mount(<Module resolve={mockModule} />, options)
-    sinon.assert.calledWith(mockStore.registerDynamicModule, {
+    sinon.assert.calledWith(mockStore.addModule, {
       name: 'module',
       reducers: mockReducer,
     })
@@ -79,6 +79,6 @@ describe('<Module />', () => {
   it('Should unregister module reducers with store when unmounting', async () => {
     const Wrapper = await mount(<Module resolve={mockModule} />, options)
     Wrapper.unmount()
-    sinon.assert.calledWith(mockStore.unRegisterDynamicModule, 'module')
+    sinon.assert.calledWith(mockStore.removeModule, 'module')
   })
 })

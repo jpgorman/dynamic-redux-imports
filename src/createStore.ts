@@ -1,14 +1,14 @@
 import { createStore, combineReducers, Store, Reducer } from 'redux'
 import * as invariant from 'invariant'
 
-interface RegisterDynamicModule {
+interface AddModule {
   name: string
   reducers: any
 }
 
 export interface DynamicStore extends Store<{}> {
-  registerDynamicModule({ name, reducers }: RegisterDynamicModule): void
-  unRegisterDynamicModule(name: string): void
+  addModule({ name, reducers }: AddModule): void
+  removeModule(name: string): void
   asyncReducers: any
 }
 
@@ -47,14 +47,14 @@ const createStoreFactory = ({ createStore, combineReducers }: any) => (
 
   const store = createStore(combineReducers(reducerMap), ...rest)
   store.asyncReducers = {}
-  store.registerDynamicModule = ({ name, reducers }: RegisterDynamicModule) => {
+  store.addModule = ({ name, reducers }: AddModule) => {
     invariant(
       !store.asyncReducers.hasOwnProperty(name),
       `There are already reducers registered with under "${name}".`,
     )
     injectAsyncReducers(store, name, reducers)
   }
-  store.unRegisterDynamicModule = (name: string): void => {
+  store.removeModule = (name: string): void => {
     invariant(
       store.asyncReducers.hasOwnProperty(name),
       `There aren't any reducers registered under "${name}".`,
