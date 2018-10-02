@@ -49,7 +49,8 @@ const createStoreFactory = ({ createStore, combineReducers }: any) => (
   store.asyncReducers = {}
   store.addModule = ({ name, reducers }: AddModule) => {
     invariant(
-      !store.asyncReducers.hasOwnProperty(name),
+      !store.asyncReducers.hasOwnProperty(name) ||
+        store.asyncReducers[name] === noopReducer,
       `There are already reducers registered with under "${name}".`,
     )
     injectAsyncReducers(store, name, reducers)

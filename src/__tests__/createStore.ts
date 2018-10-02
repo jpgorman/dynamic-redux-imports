@@ -106,6 +106,15 @@ describe('createDynamicStore', () => {
         }),
       ).toThrow()
     })
+    it('Should NOT throw when trying to addModule under a namespace was previously removed', () => {
+      mockStore.removeModule('moduleA')
+      expect(() =>
+        mockStore.addModule({
+          name: 'moduleA',
+          reducers: mockDynamicReducerMap,
+        }),
+      ).not.toThrow()
+    })
   })
   describe('Dynamically unregistering modules', () => {
     beforeEach(() => {
