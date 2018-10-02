@@ -1,8 +1,7 @@
 {
   "name": "dynamic-redux-imports",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "description": "Dynamically load components and reducers into your app and redux store, whilst taking advantage of code-splitting to reduce your app's load time.",
-
   "main": "dist/index.js",
   "types": "src/index.ts",
   "respository": "https://github.com/jpgorman.dynamic-redux-inports",
