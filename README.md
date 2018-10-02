@@ -1,3 +1,6 @@
+[![build Status](https://travis-ci.com/jpgorman/dynamic-redux-imports.svg?branch=master)](https://travis-ci.com/jpgorman/dynamic-redux-imports)
+[![npm version](https://badge.fury.io/js/dynamic-redux-imports.svg)](https://badge.fury.io/js/dynamic-redux-imports)
+
 ## Why use this?
 
 TL:DR; Dynamically load components and reducers into your app and redux store, whilst taking advantage of code-splitting to reduce your app's load time.
