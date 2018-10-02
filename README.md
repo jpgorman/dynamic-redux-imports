@@ -14,7 +14,7 @@ This package aims to help resolve some of this complexity by allowing developers
 
 ## Demo
 
-[Here's a working example.](https://codesandbox.io/s/znx199wpmp)
+[Here's a working example.](https://codesandbox.io/s/wnyr7o0m3l)
 
 ## Usage
 ```js
