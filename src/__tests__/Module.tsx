@@ -33,6 +33,8 @@ const options = {
   },
 }
 
+const waitForPromises = () => new Promise(resolve => setImmediate(resolve))
+
 describe('<Module />', () => {
   it('Should render loading prop if module is not ready', () => {
     const Wrapper = mount(
@@ -45,11 +47,13 @@ describe('<Module />', () => {
   })
   it('Should render module view', async () => {
     const Wrapper = await mount(<Module resolve={mockModule} />)
+    await waitForPromises()
 
     expect(Wrapper.text()).toBe('foo')
   })
   it('Should pass props other onto modules View component', async () => {
     const Wrapper = await mount(<Module foo="bar" resolve={mockModule} />)
+    await waitForPromises()
 
     expect(Wrapper.text()).toBe('bar')
   })
@@ -57,10 +61,14 @@ describe('<Module />', () => {
     const Wrapper = await mount(
       <Module resolve={() => Promise.resolve({ default: { name: 'foo' } })} />,
     )
+    await waitForPromises()
+
     expect(Wrapper.text()).toBe(null)
   })
   it('Should register module reducers with store', async () => {
     await mount(<Module resolve={mockModule} />, options)
+    await waitForPromises()
+
     expect(mockStore.addModule).toHaveBeenCalledWith({
       name: 'module',
       reducers: mockReducer,
@@ -68,6 +76,8 @@ describe('<Module />', () => {
   })
   it('Should unregister module reducers with store when unmounting', async () => {
     const Wrapper = await mount(<Module resolve={mockModule} />, options)
+    await waitForPromises()
+
     Wrapper.unmount()
     expect(mockStore.removeModule).toBeCalledWith('module')
   })
