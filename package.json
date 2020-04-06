@@ -15,7 +15,8 @@
   "author": "",
   "files": [
     "dist",
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "!src/__tests__/*.ts"
   ],
   "scripts": {
     "prepare": "npm run test && npm run build",
